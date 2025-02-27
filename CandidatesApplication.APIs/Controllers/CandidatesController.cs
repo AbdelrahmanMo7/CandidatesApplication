@@ -3,6 +3,7 @@ using CandidatesApplication.BL.Services.DTOs.CanditateDTOs;
 using CandidatesApplication.BL.Services.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CandidatesApplication.APIs.Controllers
 {
@@ -35,7 +36,7 @@ namespace CandidatesApplication.APIs.Controllers
 
 
         [HttpPost("addOne")]
-        public async Task<IActionResult> AddOne(CandidateForAdding_dto canditateForAdding_)
+        public async Task<IActionResult> AddOne(CandidateForWriting_dto canditateForAdding_)
         {
             try
             {
@@ -68,7 +69,7 @@ namespace CandidatesApplication.APIs.Controllers
         }
 
         [HttpPut("Update")]
-        public async Task<IActionResult> Update(CandidateForAdding_dto canditateForUpdating_)
+        public async Task<IActionResult> Update(CandidateForWriting_dto canditateForUpdating_)
         {
             try
             {
@@ -77,12 +78,13 @@ namespace CandidatesApplication.APIs.Controllers
                 {
                     return BadRequest(result);
                 }
-                return CreatedAtAction("GetById", new { id = canditateForUpdating_.Id }, canditateForUpdating_);
+                return StatusCode(204, new { massage = "updated", UpdateedCandidates = canditateForUpdating_ });
             }
             catch (Exception ex)
             {
                 return BadRequest(" Filled to Update this Canditate !!!");
             }
         }
-    }
+
+         }
 }

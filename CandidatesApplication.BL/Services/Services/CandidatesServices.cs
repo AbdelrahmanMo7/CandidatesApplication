@@ -65,7 +65,7 @@ namespace CandidatesApplication.BL.Services.Services
 
             foreach (var item in candidates)
             {
-                KeyValuePair<int, string> result = await this.AddOne(new CandidateForAdding_dto
+                KeyValuePair<int, string> result = await this.AddOne(new CandidateForWriting_dto
                 {
                     Email = item.Email,
                     Nickname = item.Nickname,
@@ -98,7 +98,7 @@ namespace CandidatesApplication.BL.Services.Services
             }).ToList();
         }
 
-        public async Task<KeyValuePair<int,string>> AddOne(CandidateForAdding_dto canditateForAdding_dto)
+        public async Task<KeyValuePair<int,string>> AddOne(CandidateForWriting_dto canditateForAdding_dto)
         {
             bool IsEmailFounded_ = _unitOfWork._canditateRepo.GetCanditatesEmails(null).Where(e => e.Contains(canditateForAdding_dto.Email)).Any();
             if (IsEmailFounded_)
@@ -114,16 +114,6 @@ namespace CandidatesApplication.BL.Services.Services
                 MaxNumSkills = canditateForAdding_dto.MaxNumSkills 
             };
             int result = await _unitOfWork._canditateRepo.Add(NewCandidate);
-
-            foreach (SkillForReading_dto skill in canditateForAdding_dto.Skills_list)
-            {
-               await _unitOfWork._candidateHasSkillRepo.Add(new CandidateHasSkill
-               {
-                   Candidate_Id=NewCandidate.Id,
-                   Skill_Id=skill.Id,
-               });
-            }
-
             return new KeyValuePair<int, string>(result, "done");
         }
 
@@ -157,11 +147,17 @@ namespace CandidatesApplication.BL.Services.Services
                 Nickname = founded.Nickname,
                 Email = founded.Email,
                 YearsOfExperience = founded.YearsOfExperience,
-                MaxNumSkills = founded.MaxNumSkills
+                MaxNumSkills = founded.MaxNumSkills,
+                Skills_list= founded.CandidateHasSkill_list.Select(h=> new SkillForReading_dto
+                {
+                    Id=h.Skill_Id,
+                    Name= h.Skill.Name,
+                    GainedDate=h.GainedDate
+                }).ToList()
             };
         }
 
-        public async Task<string> Update(CandidateForAdding_dto canditateForAdding_dto)
+        public async Task<string> Update(CandidateForWriting_dto canditateForAdding_dto)
         {
             bool IsEmailFounded_ = _unitOfWork._canditateRepo.GetCanditatesEmails( canditateForAdding_dto.Id).Where(e => e.Contains(canditateForAdding_dto.Email)).Any();
             if (IsEmailFounded_)
@@ -178,30 +174,7 @@ namespace CandidatesApplication.BL.Services.Services
             };
             await _unitOfWork._canditateRepo.Update(NewCandidate);
 
-            foreach (SkillForReading_dto skill in canditateForAdding_dto.Skills_list)
-            {
-                CandidateHasSkill founded = _unitOfWork._candidateHasSkillRepo.GetByCandidateIdAndSkillId(NewCandidate.Id, skill.Id);
-                if (founded == null)
-                {
-                    await _unitOfWork._candidateHasSkillRepo.Add(new CandidateHasSkill
-                    {
-                        Candidate_Id = NewCandidate.Id,
-                        Skill_Id = skill.Id,
-                    });
-                }
-
-            }
-
-            foreach (CandidateHasSkill skill in _unitOfWork._canditateRepo.GetById(NewCandidate.Id).CandidateHasSkill_list)
-            {
-                SkillForReading_dto founded = canditateForAdding_dto.Skills_list.FirstOrDefault(h=> h.Id == skill.Skill_Id);
-                if (founded == null)
-                {
-                    await _unitOfWork._candidateHasSkillRepo.Delete_CandidateHasSkill(skill.Candidate_Id,skill.Skill_Id);
-                }
-
-            }
-
+            
             return "done";
         }
     }

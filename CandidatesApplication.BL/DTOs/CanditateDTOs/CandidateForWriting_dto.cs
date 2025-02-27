@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CandidatesApplication.BL.DTOs.CanditateDTOs
 {
-    public class CandidateForAdding_dto
+    public class CandidateForWriting_dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -19,6 +19,6 @@ namespace CandidatesApplication.BL.DTOs.CanditateDTOs
         public string Email { get; set; }
         public int YearsOfExperience { get; set; }
         public int MaxNumSkills { get; set; }
-        public IList<SkillForReading_dto> Skills_list { get; set; } = new List<SkillForReading_dto>();
+      //  public IList<SkillForReading_dto> Skills_list { get; set; } = new List<SkillForReading_dto>();
     }
 }

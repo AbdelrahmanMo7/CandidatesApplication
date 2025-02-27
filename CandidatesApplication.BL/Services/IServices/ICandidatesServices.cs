@@ -14,8 +14,8 @@ namespace CandidatesApplication.BL.Services.IServices
     {
         IList<CandidateForReading_dto> GetAll();
         CandidateForReading_dto? GetById(int id);
-        Task<KeyValuePair<int, string>> AddOne(CandidateForAdding_dto canditateForAdding_dto);
+        Task<KeyValuePair<int, string>> AddOne(CandidateForWriting_dto canditateForAdding_dto);
         Task<IList<CandidateForReading_dto>> AddList(Stream fileStream);
-        Task<string> Update(CandidateForAdding_dto canditateForAdding_dto);
+        Task<string> Update(CandidateForWriting_dto canditateForAdding_dto);
     }
 }

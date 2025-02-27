@@ -26,6 +26,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<ICandidatesServices, CandidatesServices>();
 builder.Services.AddScoped<ISkillServices, SkillServices>();
+builder.Services.AddScoped<ICandidatesHasSkillsServices, CandidatesHasSkillsServices>();
 
 
 builder.Services.AddCors(options =>

@@ -14,6 +14,7 @@ namespace CandidatesApplication.BL.DTOs.SkillDTOs
         public int Id { get; set; }
         [RegularExpression(@"^[^\d]+$", ErrorMessage = "Skill name should contain only letters and symbols, no numbers.")]
         public string Name { get; set; }
+        public DateTime GainedDate { get; set; }
 
     }
 }
