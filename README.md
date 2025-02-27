@@ -1,5 +1,6 @@
 # CandidatesApplication.APIs
-
+ >>> App DB_Diagram :
+![DB_Diagram](https://github.com/user-attachments/assets/6d9a19b4-767d-4abe-96bf-b92946888237)
 +-- Setup
 1. Clone Repository
 2. Apply Migrations: in DAL
@@ -16,4 +17,4 @@
 
 - frontend  side ( Angular) : [3 Hours]
 
-![DB_Diagram](https://github.com/user-attachments/assets/6d9a19b4-767d-4abe-96bf-b92946888237)
+
