@@ -10,17 +10,17 @@
 * Candidate table:
            Id ,           
            Name ,      
-           Nickname ,      
-           Email ,        
-           YearsOfExperience ,
+           Nickname ,                  
+           Email ,                                              
+           YearsOfExperience ,                                                           
            MaxNumSkills 
 * Skill table : 
            Id ,                 
            Name    
-* CandidateHasSkills table :
-           Candidate_Id      --> FK to Candidates.Id  ,     
-           Skill_Id             --> FK to Skills.Id  ,    
-           GainedDate  
+* CandidateHasSkills table :                                                  
+           Candidate_Id      --> FK to Candidates.Id  ,                   
+           Skill_Id             --> FK to Skills.Id  ,                   
+           GainedDate                        
     
 ----------------
 +-- Setup
