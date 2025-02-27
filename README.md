@@ -7,14 +7,14 @@
 ---- 
 ** Db Schema :
 
-* Candidate table:
+* Candidate table:                                              
            Id ,           
            Name ,      
            Nickname ,                  
            Email ,                                              
            YearsOfExperience ,                                                           
            MaxNumSkills 
-* Skill table : 
+* Skill table :                               
            Id ,                 
            Name    
 * CandidateHasSkills table :                                                  
