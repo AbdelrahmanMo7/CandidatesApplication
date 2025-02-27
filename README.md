@@ -3,6 +3,24 @@
 
 ![DB_Diagram](https://github.com/user-attachments/assets/6d9a19b4-767d-4abe-96bf-b92946888237)
 
+
+---- 
+** Db Schema :
+
+* Candidate table:
+           Id           
+           Name       
+           Nickname       
+           Email        
+           YearsOfExperience 
+           MaxNumSkills
+* Skill table : 
+           Id              
+           Name   
+* CandidateHasSkills table :
+           Candidate_Id      --> FK to Candidates.Id
+           Skill_Id             --> FK to Skills.Id
+           GainedDate      
 ----------------
 +-- Setup
 1. Clone Repository
