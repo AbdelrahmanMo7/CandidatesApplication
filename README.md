@@ -8,18 +8,18 @@
 ** Db Schema :
 
 * Candidate table:
-           Id           
-           Name       
-           Nickname       
-           Email        
-           YearsOfExperience 
-           MaxNumSkills
+           Id ,           
+           Name ,      
+           Nickname ,      
+           Email ,        
+           YearsOfExperience ,
+           MaxNumSkills 
 * Skill table : 
-           Id              
-           Name   
+           Id ,                 
+           Name    
 * CandidateHasSkills table :
-           Candidate_Id      --> FK to Candidates.Id
-           Skill_Id             --> FK to Skills.Id
+           Candidate_Id      --> FK to Candidates.Id  ,     
+           Skill_Id             --> FK to Skills.Id  ,    
            GainedDate  
     
 ----------------
