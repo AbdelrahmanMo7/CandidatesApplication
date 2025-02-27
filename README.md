@@ -16,3 +16,4 @@
 
 - frontend  side ( Angular) : [3 Hours]
 
+![DB_Diagram](https://github.com/user-attachments/assets/6d9a19b4-767d-4abe-96bf-b92946888237)
