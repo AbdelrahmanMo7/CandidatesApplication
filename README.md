@@ -20,7 +20,8 @@
 * CandidateHasSkills table :
            Candidate_Id      --> FK to Candidates.Id
            Skill_Id             --> FK to Skills.Id
-           GainedDate      
+           GainedDate  
+    
 ----------------
 +-- Setup
 1. Clone Repository
