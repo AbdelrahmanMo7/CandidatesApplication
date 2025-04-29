@@ -32,7 +32,7 @@ builder.Services.AddScoped<ICandidatesHasSkillsServices, CandidatesHasSkillsServ
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp",
-        policy => policy.WithOrigins("http://localhost:4200")
+        policy => policy.WithOrigins("http://localhost:8100")
                         .AllowAnyHeader()
                         .AllowAnyMethod());
 });
@@ -56,6 +56,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAngularApp");
+//app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();

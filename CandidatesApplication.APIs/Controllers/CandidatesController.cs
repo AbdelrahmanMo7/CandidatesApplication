@@ -20,9 +20,16 @@ namespace CandidatesApplication.APIs.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll([FromQuery] int pageNumber)
         {
-            return Ok(_canditatesServices.GetAll());
+            var result = _canditatesServices.GetAll(pageNumber);
+            return Ok(new
+            {
+                TotalCount = result.Value,
+               
+                Data = result.Key
+            });
+           
         }
 
         [HttpGet("{id:int}")]
@@ -41,10 +48,11 @@ namespace CandidatesApplication.APIs.Controllers
             try
             {
                 KeyValuePair<int, string> result = await _canditatesServices.AddOne(canditateForAdding_);
-                if (result.Key < 0)
+                if (result.Key <= 0)
                 {
                     return BadRequest(result.Value);
                 }
+                canditateForAdding_.Id = result.Key;
                 return CreatedAtAction("GetById", new { id = result.Key }, canditateForAdding_);
             }
             catch (Exception ex)
@@ -78,7 +86,7 @@ namespace CandidatesApplication.APIs.Controllers
                 {
                     return BadRequest(result);
                 }
-                return StatusCode(204, new { massage = "updated", UpdateedCandidates = canditateForUpdating_ });
+                return Ok( new { massage = "updated", UpdateedCandidates = canditateForUpdating_ });
             }
             catch (Exception ex)
             {

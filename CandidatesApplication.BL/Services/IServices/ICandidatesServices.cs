@@ -12,7 +12,7 @@ namespace CandidatesApplication.BL.Services.IServices
 {
     public interface ICandidatesServices
     {
-        IList<CandidateForReading_dto> GetAll();
+        KeyValuePair<IList<CandidateForReading_dto>, int> GetAll( int PageNumber);
         CandidateForReading_dto? GetById(int id);
         Task<KeyValuePair<int, string>> AddOne(CandidateForWriting_dto canditateForAdding_dto);
         Task<IList<CandidateForReading_dto>> AddList(Stream fileStream);

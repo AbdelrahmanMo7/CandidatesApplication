@@ -13,6 +13,6 @@ namespace CandidatesApplication.DAL.Repos.IRepos
 
         CandidateHasSkill? GetByCandidateIdAndSkillId(int Candidate_id, int Skill_id);
        
-        Task Delete_CandidateHasSkill(int Candidate_id, int Skill_id);
+        Task<bool> Delete_CandidateHasSkill(int Candidate_id, int Skill_id);
     }
 }

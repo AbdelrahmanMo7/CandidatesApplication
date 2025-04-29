@@ -29,16 +29,17 @@ namespace CandidatesApplication.DAL.Repos.Repos
             return candidateHasSkill;
         }
 
-        public async Task Delete_CandidateHasSkill(int Candidate_id, int Skill_id)
+        public async Task<bool> Delete_CandidateHasSkill(int Candidate_id, int Skill_id)
         {
             CandidateHasSkill? candidateHasSkill = _context.CandidateHasSkills.FirstOrDefault(e => e.Candidate_Id == Candidate_id && e.Skill_Id == Skill_id);
             if (candidateHasSkill is null)
             {
-                return;
+                return false;
             }
 
             _context.CandidateHasSkills.Remove(candidateHasSkill);
             await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -13,9 +13,9 @@ namespace CandidatesApplication.BL.DTOs.CanditateDTOs
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        [RegularExpression(@".*\d[§®™©ʬ@].*", ErrorMessage = "Invalid Nick name format.")]
+        [RegularExpression(@"^(?=.*[0-9])(?=.*[§®™©ʬ@]).+$", ErrorMessage = "Invalid Nick name format.")]
         public string Nickname { get; set; }
-        [RegularExpression(@"^[^@\s]+@[^@\s]+\.com[^@\s]*$", ErrorMessage = "Invalid Email format.")]
+        [RegularExpression(@"^.+@.+$", ErrorMessage = "Invalid Email format. Must contain '@'.")]
         public string Email { get; set; }
         public int YearsOfExperience { get; set; }
         public int MaxNumSkills { get; set; }

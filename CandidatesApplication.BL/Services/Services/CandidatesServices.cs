@@ -65,6 +65,10 @@ namespace CandidatesApplication.BL.Services.Services
 
             foreach (var item in candidates)
             {
+                // ckeck validations
+
+                //
+
                 KeyValuePair<int, string> result = await this.AddOne(new CandidateForWriting_dto
                 {
                     Email = item.Email,
@@ -78,7 +82,7 @@ namespace CandidatesApplication.BL.Services.Services
                 {
                     newList.Add(new CandidateForReading_dto
                     {
-                        Id = item.Id,
+                        Id = result.Key ,
                         Name = item.Name,
                         Nickname = item.Nickname,
                         Email = item.Email,
@@ -87,20 +91,12 @@ namespace CandidatesApplication.BL.Services.Services
                     });
                 }
             }
-            return candidates.Select(e => new CandidateForReading_dto
-            {
-                Id = e.Id,
-                Name = e.Name,
-                Nickname = e.Nickname,
-                Email = e.Email,
-                YearsOfExperience = e.YearsOfExperience,
-                MaxNumSkills = e.MaxNumSkills
-            }).ToList();
+            return newList;
         }
 
         public async Task<KeyValuePair<int,string>> AddOne(CandidateForWriting_dto canditateForAdding_dto)
         {
-            bool IsEmailFounded_ = _unitOfWork._canditateRepo.GetCanditatesEmails(null).Where(e => e.Contains(canditateForAdding_dto.Email)).Any();
+            bool IsEmailFounded_ = _unitOfWork._canditateRepo.GetCanditatesEmails(null).Where(e => e.Equals(canditateForAdding_dto.Email)).Any();
             if (IsEmailFounded_)
             {
                 return new KeyValuePair<int, string>(-1, "this Email is Already Founded For another User");
@@ -113,14 +109,16 @@ namespace CandidatesApplication.BL.Services.Services
                 YearsOfExperience = canditateForAdding_dto.YearsOfExperience,
                 MaxNumSkills = canditateForAdding_dto.MaxNumSkills 
             };
-            int result = await _unitOfWork._canditateRepo.Add(NewCandidate);
-            return new KeyValuePair<int, string>(result, "done");
+            await _unitOfWork._canditateRepo.Add(NewCandidate);
+            
+            return new KeyValuePair<int, string>(NewCandidate.Id, "done");
         }
 
-        public IList<CandidateForReading_dto> GetAll()
+        public KeyValuePair< IList<CandidateForReading_dto>,int> GetAll(int PageNumber)
         {
             IList < CandidateForReading_dto > canditates = new List<CandidateForReading_dto >();
-            canditates = _unitOfWork._canditateRepo.GetAll().Select(e => new CandidateForReading_dto
+            var alllist = _unitOfWork._canditateRepo.GetAll();
+            canditates = alllist.OrderByDescending(c=>c.Id).Skip((PageNumber-1)*20).Take(20).Select(e => new CandidateForReading_dto
             {
                 Id = e.Id,
                 Name = e.Name,
@@ -129,7 +127,7 @@ namespace CandidatesApplication.BL.Services.Services
                 YearsOfExperience = e.YearsOfExperience,
                 MaxNumSkills = e.MaxNumSkills
             }).ToList();
-            return canditates;
+            return new KeyValuePair<IList<CandidateForReading_dto>, int>( canditates,alllist.Count());
         }
 
         public CandidateForReading_dto? GetById(int id)
@@ -166,6 +164,7 @@ namespace CandidatesApplication.BL.Services.Services
             }
             Candidate NewCandidate = new Candidate
             {
+                Id =canditateForAdding_dto.Id,
                 Name = canditateForAdding_dto.Name,
                 Nickname = canditateForAdding_dto.Nickname,
                 Email = canditateForAdding_dto.Email,

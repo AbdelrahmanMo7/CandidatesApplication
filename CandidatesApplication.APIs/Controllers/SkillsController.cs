@@ -22,7 +22,7 @@ namespace CandidatesApplication.APIs.Controllers
             return Ok(_skillServices.GetAll());
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add(SkillForReading_dto skillForReading_Dto)
         {
             try

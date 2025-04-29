@@ -114,22 +114,39 @@ namespace CandidatesApplication.BL.Services.Services
 
         public async Task<KeyValuePair<string, IList<SkillForReading_dto>>> Delete(IList<CandidateHasSkill_dto> candidateHasSkill_dto_list)
         {
-
+            if (candidateHasSkill_dto_list is null)
+            {
+                return new KeyValuePair<string, IList<SkillForReading_dto>>("deleted Faild", null);
+            }
+            if (!candidateHasSkill_dto_list.Any())
+            {
+                return new KeyValuePair<string, IList<SkillForReading_dto>>("deleted Faild", null);
+            }
+            bool isDeleted = false;
             foreach (var skill in candidateHasSkill_dto_list)
             {
 
-                await _unitOfWork._candidateHasSkillRepo.Delete_CandidateHasSkill(skill.Candidate_Id, skill.Skill_Id);
+               bool result=  await _unitOfWork._candidateHasSkillRepo.Delete_CandidateHasSkill(skill.Candidate_Id, skill.Skill_Id);
+                if (result)
+                {
+                    isDeleted = true;
+                }
 
             }
 
-            IList<SkillForReading_dto> Candidate_Skills = _unitOfWork._canditateRepo.GetById(candidateHasSkill_dto_list[0].Candidate_Id).CandidateHasSkill_list.Select(h => new SkillForReading_dto
+            if (isDeleted)
             {
-                Id = h.Skill_Id,
-                Name = h.Skill.Name,
-                GainedDate = h.GainedDate
-            }).ToList();
+                IList<SkillForReading_dto> Candidate_Skills = _unitOfWork._canditateRepo.GetById(candidateHasSkill_dto_list[0].Candidate_Id).CandidateHasSkill_list.Select(h => new SkillForReading_dto
+                {
+                    Id = h.Skill_Id,
+                    Name = h.Skill.Name,
+                    GainedDate = h.GainedDate
+                }).ToList();
+                return new KeyValuePair<string, IList<SkillForReading_dto>>("deleted Successfully", Candidate_Skills);
+            }
 
-            return new KeyValuePair<string, IList<SkillForReading_dto> >( "deleted Successfully", Candidate_Skills);
+            return new KeyValuePair<string, IList<SkillForReading_dto>>("deleted Faild", null);
+
         }
 
     }

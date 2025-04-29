@@ -61,12 +61,16 @@ namespace CandidatesApplication.APIs.Controllers
         }
 
 
-        [HttpDelete("Delete")]
+        [HttpPost("Delete")]
         public async Task<ActionResult> Delete(IList<CandidateHasSkill_dto> candidateHasSkill_Dto_list)
         {
             try
             {
                 KeyValuePair<string, IList<SkillForReading_dto>> result = await _candidatesHasSkillsServices.Delete(candidateHasSkill_Dto_list);
+                if (result.Value is null)
+                {
+                    return BadRequest( "error "+ result.Key );
+                }
                 return Ok(new
                 {
                     message = result.Key,
@@ -74,7 +78,7 @@ namespace CandidatesApplication.APIs.Controllers
                     Candidate_Skills_ = result.Value
                 });
 
-                return StatusCode(204, new { massage = result });
+               
             }
             catch (Exception ex)
             {
